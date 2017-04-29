@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="SQL_insert_category">INSERT INTO Category (id, category) VALUES (?, ?)</string>
+    <string name="SQL_insert_keyword">INSERT INTO Keyword(id, keyword) VALUES (?, ?)</string>
+    <string name="SQL_insert_emoji_keyword">INSERT INTO Emoji_Keyword (emoji_id, keyword_id) VALUES (?, ?)</string>
+    <string name="SQL_insert_emoji">INSERT INTO Emoji (id, code, name, short_name, has_tone, tone, emoji_order, category_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)</string>
+</resources>
