@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="SQL_select_all_emojilite">SELECT Emoji.code, Emoji.has_tone, Emoji.tone, Emoji.emoji_order, Category.category FROM Emoji JOIN Category ON (Emoji.category_id = Category.id)</string>
+</resources>

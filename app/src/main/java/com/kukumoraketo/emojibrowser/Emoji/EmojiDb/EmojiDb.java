@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiCategory;
+import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiLite;
 import com.kukumoraketo.emojibrowser.R;
 
 import org.json.JSONObject;
@@ -16,6 +18,7 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zed on 29.4.2017.
@@ -84,7 +87,7 @@ public class EmojiDb {
 
             String line;
 
-            // inserts Category
+            // inserts EmojiCategory
             sql = this.context.getString(R.string.SQL_insert_category);
             statement = db.compileStatement(sql);
 
@@ -191,6 +194,32 @@ public class EmojiDb {
         finally {
             db.close();
         }
+
+    }
+
+    public List<EmojiLite> getAllEmojiLite(){
+
+        List<EmojiLite> r = new ArrayList<>();
+
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+
+        Cursor c = db.rawQuery(this.context.getString(R.string.SQL_select_all_emojilite), null);
+
+        while (c.moveToNext()){
+            String unicode = c.getString(0);
+            int hasToneint = c.getInt(1);
+            boolean hasTone = ((hasToneint == 1)? true : false);
+            int tone = c.getInt(2);
+            int emojiOrder = c.getInt(3);
+            EmojiCategory category = EmojiCategory.stringToCategory(c.getString(4));
+
+            EmojiLite emoji = new EmojiLite(unicode, hasTone, tone, emojiOrder,category);
+
+            r.add(emoji);
+
+        }
+
+        return r;
 
     }
 
