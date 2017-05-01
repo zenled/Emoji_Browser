@@ -3,8 +3,6 @@ package com.kukumoraketo.emojibrowser.Emoji.Emoji;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.util.Comparator;
-
 /**
  * Created by zed on 29.4.2017.
  */
@@ -42,8 +40,11 @@ public class EmojiLite extends EmojiMinimal implements Comparable<EmojiLite> {
 
     @Override
     public int getDravableId(Context context) {
-        // TODO
-        return 0;
+        return context.getResources().getIdentifier(getImageName(), "drawable", context.getPackageName());
+    }
+
+    private String getImageName(){
+        return "em_" + this.unicode.replace("-", "_");
     }
 
     public boolean hasTone(){
