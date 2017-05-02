@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/emoji_display_single_layout_size"
+    android:layout_height="@dimen/emoji_display_single_layout_size"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/emojiDisplaySingle_ImageView"
+        android:src="@drawable/em_2a_20e3"
+        android:layout_width="@dimen/emoji_display_single_image_size"
+        android:layout_height="@dimen/emoji_display_single_image_size"
+        />
+
+</LinearLayout>

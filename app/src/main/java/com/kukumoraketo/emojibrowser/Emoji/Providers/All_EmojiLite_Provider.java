@@ -15,28 +15,32 @@ import java.util.List;
  * Created by zed on 29.4.2017.
  */
 
-public class All_EmojiLite_Provider {
+public class All_EmojiLite_Provider implements EmojiProvider{
 
     private Context context;
 
-    private List<EmojiLite> allEmoji;
-
     private EmojiDb emojiDb;
 
+    private List<EmojiLite> allEmoji;
+    private EmojiTone tone; // selected EmojiTone
 
-    public All_EmojiLite_Provider(Context context){
+
+    public All_EmojiLite_Provider(Context context, EmojiTone emojiTone){
         this.context = context;
 
         this.emojiDb = new EmojiDb(context);
 
         this.allEmoji = this.emojiDb.getAllEmojiLite();
+        this.tone = emojiTone;
     }
 
-    public List<EmojiLite> getEmoji(EmojiCategory category, EmojiTone tone){
+
+    @Override
+    public List<EmojiLite> getEmoji(EmojiCategory category){
         List<EmojiLite> r = new ArrayList<>();
 
         for (EmojiLite emoji : this.allEmoji){
-            if (emoji.getCategory() == category && ( !emoji.hasTone() || emoji.getTone() == tone))
+            if (emoji.getCategory() == category && ( !emoji.hasTone() || emoji.getTone() == this.tone))
                 r.add(emoji);
         }
 

@@ -1,0 +1,15 @@
+<GridView
+    android:id="@+id/emojiDisplay_GridView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnWidth="72dp"
+    android:numColumns="auto_fit"
+    android:verticalSpacing="5dp"
+    android:horizontalSpacing="5dp"
+    android:stretchMode="columnWidth"
+    android:gravity="center"
+    tools:context="com.kukumoraketo.emojibrowser.EmojiDisplay.BasicEmojiDisplayFragment"
+    android:listSelector="@android:color/transparent"
+    />
