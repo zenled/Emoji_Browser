@@ -17,4 +17,16 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="DialogTitleAppearance">
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="android:textSize">@dimen/h5</item>
+        <item name="android:textIsSelectable">true</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>

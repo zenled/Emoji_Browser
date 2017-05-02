@@ -15,14 +15,16 @@ import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiTone;
 import com.kukumoraketo.emojibrowser.Emoji.EmojiDb.EmojiDb;
 import com.kukumoraketo.emojibrowser.Emoji.Providers.All_EmojiLite_Provider;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.BasicEmojiDisplayFragment;
+import com.kukumoraketo.emojibrowser.EmojiDisplay.ChangeToneDialogFragment;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.EmojiDisplayAdapter;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.EmojiDisplayFragment;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.EmojiDisplayPagerAdapter;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.FragmentType;
 
-public class BrowserActivity extends AppCompatActivity {
+public class BrowserActivity extends AppCompatActivity implements ChangeToneDialogFragment.ChangeToneListener{
 
-    All_EmojiLite_Provider provider;
+    private All_EmojiLite_Provider provider;
+    private EmojiDisplayPagerAdapter pagerAdapter;
 
     private MenuItem toneIndicator;
 
@@ -35,7 +37,7 @@ public class BrowserActivity extends AppCompatActivity {
         this.provider = new All_EmojiLite_Provider(getApplicationContext(), EmojiTone.TONE_00);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        final EmojiDisplayPagerAdapter pagerAdapter = new EmojiDisplayPagerAdapter(getSupportFragmentManager(), provider, getApplicationContext());
+        pagerAdapter = new EmojiDisplayPagerAdapter(getSupportFragmentManager(), provider, getApplicationContext());
         viewPager.setAdapter(pagerAdapter);
 
 
@@ -55,8 +57,9 @@ public class BrowserActivity extends AppCompatActivity {
                 switch (itemId){
 
                     case R.id.mi_change_tone: {
-
-                        break;
+                        ChangeToneDialogFragment changeToneDialog = ChangeToneDialogFragment.newInstance(provider.getTone());
+                        changeToneDialog.show(getSupportFragmentManager(), "change_tone_dialog");
+                        return true;
                     }
                     case R.id.mi_about: {
                         // TODO
@@ -73,6 +76,22 @@ public class BrowserActivity extends AppCompatActivity {
 
         //endregion
 
+
+    }
+
+    @Override
+    public void onChangeToneDialogPositiveClick(EmojiTone selectedTone) {
+
+        this.provider.setTone(selectedTone);
+        this.updateToneIndicator();
+
+        // Do this if tone changed
+        for (EmojiDisplayFragment fragment: pagerAdapter.fragments){
+            if (fragment != null) {
+                fragment.forceEmojiRefresh();
+                fragment.forceGridViewRefresh();
+            }
+        }
 
     }
 

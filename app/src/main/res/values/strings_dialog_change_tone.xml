@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_change_tone_title">Change Tone</string>
+    <string name="dialog_change_tone_positive_button">Select</string>
+    <string name="dialog_change_tone_negative_button">Cancel</string>
+</resources>

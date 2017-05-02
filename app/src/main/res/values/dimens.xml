@@ -4,4 +4,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>h1
 
+    <!-- text dimensions -->
+    <dimen name="h1">112sp</dimen>
+    <dimen name="h2">56sp</dimen>
+    <dimen name="h3">45sp</dimen>
+    <dimen name="h4">34sp</dimen>
+    <dimen name="h5">24sp</dimen>
+    <dimen name="h6">20sp</dimen>
 </resources>
