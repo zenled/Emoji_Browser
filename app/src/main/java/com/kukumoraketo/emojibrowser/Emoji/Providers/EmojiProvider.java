@@ -20,4 +20,18 @@ public interface EmojiProvider {
      */
     List<EmojiLite> getEmoji (EmojiCategory category);
 
+    /**
+     * Returns curently selected EmojiTone
+     * @return curent EmojiTone
+     */
+    EmojiTone getTone();
+
+    /**
+     * Sets the curent EmojiTone
+     * @param newTone new tone to set
+     */
+    void setTone(EmojiTone newTone);
+
+
+
 }

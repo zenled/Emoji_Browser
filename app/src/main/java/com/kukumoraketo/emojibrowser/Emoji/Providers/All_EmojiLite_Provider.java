@@ -48,4 +48,14 @@ public class All_EmojiLite_Provider implements EmojiProvider{
 
         return r;
     }
+
+    @Override
+    public EmojiTone getTone() {
+        return this.tone;
+    }
+
+    @Override
+    public void setTone(EmojiTone newTone) {
+        this.tone = newTone;
+    }
 }

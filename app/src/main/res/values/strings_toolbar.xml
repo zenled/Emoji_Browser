@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone00">Tone 0</string>
+    <string name="tone01">Tone 1</string>
+    <string name="tone02">Tone 2</string>
+    <string name="tone03">Tone 3</string>
+    <string name="tone04">Tone 4</string>
+    <string name="tone05">Tone 5</string>
+
+    <string name="about_title">About</string>
+</resources>

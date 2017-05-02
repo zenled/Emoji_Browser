@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,6 +23,8 @@ import com.kukumoraketo.emojibrowser.EmojiDisplay.FragmentType;
 public class BrowserActivity extends AppCompatActivity {
 
     All_EmojiLite_Provider provider;
+
+    private MenuItem toneIndicator;
 
 
     @Override
@@ -37,9 +42,51 @@ public class BrowserActivity extends AppCompatActivity {
         //region sets TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+        //endregion
+
+        //region sets Toolbar
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                switch (itemId){
+
+                    case R.id.mi_change_tone: {
+
+                        break;
+                    }
+                    case R.id.mi_about: {
+                        // TODO
+                        break;
+                    }
+                    default:
+                        break;
+
+                }
+
+                return true;
+            }
+        });
+
+        //endregion
 
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_emoji_display, menu);
 
+        this.toneIndicator =  menu.findItem(R.id.mi_change_tone);
+        updateToneIndicator();
+
+        return true;
+    }
+
+    private void updateToneIndicator(){
+        this.toneIndicator.setIcon(EmojiTone.getIcon(this.provider.getTone()));
     }
 }

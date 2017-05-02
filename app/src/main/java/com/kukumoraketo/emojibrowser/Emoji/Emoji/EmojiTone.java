@@ -1,5 +1,7 @@
 package com.kukumoraketo.emojibrowser.Emoji.Emoji;
 
+import com.kukumoraketo.emojibrowser.R;
+
 /**
  * Created by zed on 29.4.2017.
  */
@@ -39,6 +41,25 @@ public enum EmojiTone {
                 return TONE_05;
             default:
                 return TONE_INVALID;
+        }
+    }
+
+    public static int getIcon(EmojiTone tone){
+        switch (tone){
+            case TONE_00:
+                return R.drawable.ic_tone00;
+            case TONE_01:
+                return R.drawable.ic_tone01;
+            case TONE_02:
+                return R.drawable.ic_tone02;
+            case TONE_03:
+                return R.drawable.ic_tone03;
+            case TONE_04:
+                return R.drawable.ic_tone04;
+            case TONE_05:
+                return R.drawable.ic_tone05;
+            default:
+                return R.drawable.em_2049;
         }
     }
 }
