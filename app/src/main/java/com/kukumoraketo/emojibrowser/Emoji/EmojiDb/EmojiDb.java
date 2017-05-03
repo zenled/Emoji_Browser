@@ -3,6 +3,7 @@ package com.kukumoraketo.emojibrowser.Emoji.EmojiDb;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
@@ -220,7 +221,35 @@ public class EmojiDb {
         }
 
         return r;
+    }
 
+    public List<String> getUnicodeByKeyword(String[] keywords){
+        List<String> r = new ArrayList<>();
+
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append(this.context.getString(R.string.SQL_select_code_by_keywords_pt_first));
+        sqlBuilder.append(this.context.getString(R.string.SQL_select_code_by_keyword_pt_1));
+        DatabaseUtils.appendEscapedSQLString(sqlBuilder, keywords[0] + "%");
+        for (int i = 1; i < keywords.length; i++){
+            sqlBuilder.append(this.context.getString(R.string.SQL_select_code_by_keyword_pt_2));
+            DatabaseUtils.appendEscapedSQLString(sqlBuilder, keywords[i] + "%");
+        }
+        sqlBuilder.append(this.context.getString(R.string.SQL_select_code_by_keyword_pt_last));
+
+        String sql = sqlBuilder.toString();
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        while (cursor.moveToNext()){
+            r.add(cursor.getString(0));
+        }
+
+        cursor.close();
+        db.close();
+
+        return r;
     }
 
 }

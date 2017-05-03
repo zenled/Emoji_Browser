@@ -50,6 +50,22 @@ public class All_EmojiLite_Provider implements EmojiProvider{
     }
 
     @Override
+    public List<EmojiLite> getEmoji(String searchString) {
+        List<EmojiLite> r = new ArrayList<>();
+
+        List<String> codes = SearcherByKeyword.getUnicodeByKeywords(this.emojiDb, searchString);
+
+        for (EmojiLite emoji : this.allEmoji){
+            if (codes.contains(emoji.getUnicode()) && (!emoji.hasTone() || emoji.getTone() == this.tone))
+                r.add(emoji);
+        }
+
+        Collections.sort(r);
+
+        return r;
+    }
+
+    @Override
     public EmojiTone getTone() {
         return this.tone;
     }
