@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import com.kukumoraketo.emojibrowser.IActivitiContainingSearchEmojiFragment;
 import com.kukumoraketo.emojibrowser.R;
@@ -25,6 +26,8 @@ public class SearchEmojiFragment extends BasicEmojiDisplayFragment {
     EditText searchField;
 
     IActivitiContainingSearchEmojiFragment parentActivity;
+
+    ImageButton clearSearchButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,6 +74,16 @@ public class SearchEmojiFragment extends BasicEmojiDisplayFragment {
 
                 forceEmojiRefresh();
                 forceGridViewRefresh();
+            }
+        });
+        //endregion
+
+        //region sets clearSearchButton
+        this.clearSearchButton = (ImageButton) v.findViewById(R.id.clear_search_button);
+        this.clearSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchField.setText("");
             }
         });
         //endregion
