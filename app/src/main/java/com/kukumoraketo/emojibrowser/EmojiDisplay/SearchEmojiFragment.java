@@ -32,7 +32,7 @@ public class SearchEmojiFragment extends BasicEmojiDisplayFragment {
         View v = inflater.inflate(R.layout.fragment_search_emoji, container, false);
 
         // gets parent Activity
-        //TODO parentActivity = (IActivitiContainingSearchEmojiFragment) getActivity();
+        parentActivity = (IActivitiContainingSearchEmojiFragment) getActivity();
 
         // sets GridView
         this.gridView = (GridView) v.findViewById(R.id.emojiDisplay_GridView);
@@ -49,7 +49,7 @@ public class SearchEmojiFragment extends BasicEmojiDisplayFragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (keyCode == EditorInfo.IME_ACTION_DONE)) {
-                    //TODO parentActivity.hideKeyboard(v);
+                    parentActivity.hideKeyboard(v);
                 }
                 return false;
             }
