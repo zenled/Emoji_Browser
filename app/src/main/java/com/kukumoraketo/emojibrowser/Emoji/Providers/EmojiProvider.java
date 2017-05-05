@@ -21,6 +21,13 @@ public interface EmojiProvider {
     List<EmojiLite> getEmoji (EmojiCategory category);
 
     /**
+     * Returns Emoji that match search string
+     * @param searchString String with keywords to do search on
+     * @return emojis that match searchString
+     */
+    List<EmojiLite> getEmoji(String searchString);
+
+    /**
      * Returns curently selected EmojiTone
      * @return curent EmojiTone
      */
@@ -31,7 +38,5 @@ public interface EmojiProvider {
      * @param newTone new tone to set
      */
     void setTone(EmojiTone newTone);
-
-
 
 }

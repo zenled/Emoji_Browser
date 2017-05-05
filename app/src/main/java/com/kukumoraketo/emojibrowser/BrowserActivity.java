@@ -1,5 +1,6 @@
 package com.kukumoraketo.emojibrowser;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiTone;
@@ -21,12 +23,15 @@ import com.kukumoraketo.emojibrowser.EmojiDisplay.EmojiDisplayFragment;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.EmojiDisplayPagerAdapter;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.FragmentType;
 
-public class BrowserActivity extends AppCompatActivity implements ChangeToneDialogFragment.ChangeToneListener{
+public class BrowserActivity extends AppCompatActivity implements ChangeToneDialogFragment.ChangeToneListener,
+                                                                   IActivitiContainingSearchEmojiFragment{
 
     private All_EmojiLite_Provider provider;
     private EmojiDisplayPagerAdapter pagerAdapter;
 
     private MenuItem toneIndicator;
+
+    private InputMethodManager inputMethodManager;
 
 
     @Override
@@ -76,7 +81,36 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
 
         //endregion
 
+        // sets InputMethodManager
+        this.inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        //region sets that Keyboard hides when changing tabs
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                View focus = getCurrentFocus();
+                if (focus != null){
+                    hideKeyboard(focus);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                View focus = getCurrentFocus();
+                if (focus != null){
+                    hideKeyboard(focus);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                View focus = getCurrentFocus();
+                if (focus != null){
+                    hideKeyboard(focus);
+                }
+            }
+        });
+        //endregion
     }
 
     @Override
@@ -107,5 +141,10 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
 
     private void updateToneIndicator(){
         this.toneIndicator.setIcon(EmojiTone.getIcon(this.provider.getTone()));
+    }
+
+    @Override
+    public void hideKeyboard(View v) {
+        this.inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

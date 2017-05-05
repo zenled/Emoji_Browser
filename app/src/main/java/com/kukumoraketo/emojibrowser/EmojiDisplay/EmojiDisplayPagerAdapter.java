@@ -55,8 +55,7 @@ public class EmojiDisplayPagerAdapter extends FragmentPagerAdapter {
         EmojiDisplayFragment fragment;
 
         if (position == 0){
-            //TODO
-            fragment = new BasicEmojiDisplayFragment();
+            fragment = new SearchEmojiFragment();
         }
         else {
             fragment = new BasicEmojiDisplayFragment();

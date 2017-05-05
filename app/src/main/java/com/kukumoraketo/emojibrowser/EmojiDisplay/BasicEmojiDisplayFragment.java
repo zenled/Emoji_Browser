@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class BasicEmojiDisplayFragment extends Fragment implements EmojiDisplayFragment{
 
-    private GridView gridView;
+    protected GridView gridView;
 
-    private FragmentType fragmentType;
+    protected FragmentType fragmentType;
 
-    private EmojiProvider provider;
-    private List<EmojiLite> myEmoji;
+    protected EmojiProvider provider;
+    protected List<EmojiLite> myEmoji;
 
 
     public BasicEmojiDisplayFragment() {
@@ -87,15 +87,16 @@ public class BasicEmojiDisplayFragment extends Fragment implements EmojiDisplayF
         this.provider = emojiProvider;
     }
 
-    private void autoInflate(){
+    protected void autoInflate(){
 
         if (this.fragmentType == FragmentType.EMOJI_SEARCH)
+            // TODO throw error this fragment cannot be of type EMOJI_SEARCH
             this.myEmoji = new ArrayList<>();
         else
             this.myEmoji = this.provider.getEmoji(FragmentType.toEmojiCategory(this.fragmentType));
     }
 
-    private void refreshEmojisGridView(){
+    protected void refreshEmojisGridView(){
 
         final EmojiDisplayAdapter adapter = new EmojiDisplayAdapter(myEmoji, getContext());
 
