@@ -1,0 +1,1 @@
+CREATE TABLE `Category` ( `id` INTEGER NOT NULL UNIQUE, `category` TEXT NOT NULL, PRIMARY KEY(`id`) )

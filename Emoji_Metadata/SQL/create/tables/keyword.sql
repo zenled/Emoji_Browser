@@ -1,0 +1,1 @@
+CREATE TABLE `Keyword` ( `id` INTEGER NOT NULL UNIQUE, `keyword` TEXT NOT NULL, PRIMARY KEY(`id`) )
