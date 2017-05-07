@@ -9,8 +9,10 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiCategory;
+import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiFull;
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiLite;
 import com.kukumoraketo.emojibrowser.R;
+import com.kukumoraketo.emojibrowser.Utils.StringUtils;
 
 import org.json.JSONObject;
 
@@ -250,6 +252,10 @@ public class EmojiDb {
         db.close();
 
         return r;
+    }
+
+    public EmojiFull getEmojiFull(String unicode){
+        //TODO here
     }
 
 }
