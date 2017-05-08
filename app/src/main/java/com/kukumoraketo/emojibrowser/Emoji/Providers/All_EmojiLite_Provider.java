@@ -3,6 +3,7 @@ package com.kukumoraketo.emojibrowser.Emoji.Providers;
 import android.content.Context;
 
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiCategory;
+import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiFull;
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiLite;
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiTone;
 import com.kukumoraketo.emojibrowser.Emoji.EmojiDb.EmojiDb;
@@ -73,5 +74,10 @@ public class All_EmojiLite_Provider implements EmojiProvider{
     @Override
     public void setTone(EmojiTone newTone) {
         this.tone = newTone;
+    }
+
+    @Override
+    public EmojiFull getEmojiFull(EmojiLite emoji) {
+        return this.emojiDb.getEmojiFull(emoji.getUnicode());
     }
 }

@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiFull;
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiLite;
 import com.kukumoraketo.emojibrowser.Emoji.Providers.EmojiProvider;
 import com.kukumoraketo.emojibrowser.R;
@@ -101,5 +103,17 @@ public class BasicEmojiDisplayFragment extends Fragment implements EmojiDisplayF
         final EmojiDisplayAdapter adapter = new EmojiDisplayAdapter(myEmoji, getContext());
 
         this.gridView.setAdapter(adapter);
+
+        this.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EmojiLite clickedEmoji = myEmoji.get(position);
+
+                EmojiFull emojiFull = provider.getEmojiFull(clickedEmoji);
+
+                EmojiDetailsDialogFragment dialogFragment = EmojiDetailsDialogFragment.newInstance(emojiFull);
+                dialogFragment.show(getFragmentManager(), "EmojiDetailsDialogFragment");
+            }
+        });
     }
 }
