@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="emoji_unicode_indicator_text">Unicode:</string>
+    <string name="emoji_shortname_indicator_text">Short Name:</string>
+    <string name="emoji_has_tone_indicator_text">Has Tone:</string>
+    <string name="emoji_category_indicator_text">Category:</string>
+    <string name="emoji_keywords_indicator_text">Keywords:</string>
+
+    <string name="copy_to_clipboard_button_text">Copy</string>
+
+    <string name="emoji_has_tone_true">Yes</string>
+    <string name="emoji_has_tone_false">No</string>
+</resources>

@@ -15,6 +15,14 @@ public class EmojiLite extends EmojiMinimal implements Comparable<EmojiLite> {
     protected EmojiCategory category;
 
 
+    /**
+     * Create new EmojiLite
+     * @param unicode
+     * @param hasTone
+     * @param tone
+     * @param emojiOrder
+     * @param category
+     */
     public EmojiLite(String unicode, boolean hasTone, EmojiTone tone, int emojiOrder, EmojiCategory category)
     {
         super(unicode);

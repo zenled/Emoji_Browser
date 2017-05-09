@@ -1,6 +1,7 @@
 package com.kukumoraketo.emojibrowser.Emoji.Providers;
 
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiCategory;
+import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiFull;
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiLite;
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiTone;
 
@@ -38,5 +39,11 @@ public interface EmojiProvider {
      * @param newTone new tone to set
      */
     void setTone(EmojiTone newTone);
+
+    /**
+     * Rerurns EmojiFull of desired Emoji
+     * @return EmojiFull
+     */
+    EmojiFull getEmojiFull(EmojiLite emoji);
 
 }

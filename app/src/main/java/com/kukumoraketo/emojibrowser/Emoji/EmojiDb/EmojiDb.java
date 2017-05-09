@@ -9,8 +9,11 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiCategory;
+import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiFull;
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiLite;
+import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiTone;
 import com.kukumoraketo.emojibrowser.R;
+import com.kukumoraketo.emojibrowser.Utils.StringUtils;
 
 import org.json.JSONObject;
 
@@ -18,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -250,6 +254,49 @@ public class EmojiDb {
         db.close();
 
         return r;
+    }
+
+    public EmojiFull getEmojiFull(String unicode){
+        String emojiUnicode;
+        boolean hasTone;
+        EmojiTone tone;
+        int emojiOrder;
+        EmojiCategory category;
+        String name;
+        String shortName;
+        List<String> keywords = new ArrayList<>();
+
+
+
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+
+        String sql = this.context.getString(R.string.SQL_select_emojifull_by_code);
+        String[] args =  {unicode};
+
+        Cursor c = db.rawQuery(sql, args);
+
+        c.moveToNext();
+
+        emojiUnicode = c.getString(0);
+        name = c.getString(1);
+        shortName = c.getString(2);
+        hasTone = (c.getInt(3) == 1) ? true : false;
+        tone = EmojiTone.getTone(c.getInt(4));
+        emojiOrder = c.getInt(5);
+        category = EmojiCategory.stringToCategory(c.getString(6));
+        keywords.add(c.getString(6));
+
+        while (c.moveToNext()){
+            keywords.add(c.getString(7));
+        }
+
+        EmojiFull r = new EmojiFull(emojiUnicode, hasTone, tone, emojiOrder, category, name, shortName, keywords);
+
+        db.close();
+        c.close();
+
+        return r;
+
     }
 
 }
