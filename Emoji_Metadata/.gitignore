@@ -1,0 +1,4 @@
+# for Emoji_Metadata development with python
+.idea/
+.vscode/
+__pycache__/
