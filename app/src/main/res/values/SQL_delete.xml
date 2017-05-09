@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="SQL_delete_category">DELETE FROM Category</string>
+    <string name="SQL_delete_emoji">DELETE FROM Emoji</string>
+    <string name="SQL_delete_emoji_keyword">DELETE FROM Emoji_Keyword</string>
+    <string name="SQL_delete_keyword">DELETE FROM Keyword</string>
+</resources>

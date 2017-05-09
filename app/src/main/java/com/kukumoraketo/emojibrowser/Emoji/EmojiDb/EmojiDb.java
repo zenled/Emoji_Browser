@@ -35,6 +35,9 @@ public class EmojiDb {
 
     private static final String PREFS_NAME = "EmojiDbPreferences";
     private static final String IS_DB_FILLED_PREFS = "is_db_filled";
+    private static final String EMOJI_METADATA_VERSION_PREFS = "emoji_metadata_version";
+
+    private static int LATEST_EMOJI_METADATA_VERSION = 1;
 
     private Context context;
     private EmojiDbHelper dbHelper;
@@ -59,20 +62,26 @@ public class EmojiDb {
 
         boolean isDbFilled = preferences.getBoolean(IS_DB_FILLED_PREFS, false);
 
-        if (isDbFilled)
-            return true;
+        if (isDbFilled) {
+            int metadataVersion = preferences.getInt(EMOJI_METADATA_VERSION_PREFS, 0);
+            if (metadataVersion == LATEST_EMOJI_METADATA_VERSION)
+                return true;
+            else
+                clearDatabase();
+        }
 
         // if not filled it fills it
         try {
             fillDb();
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(IS_DB_FILLED_PREFS, true);
+            editor.putInt(EMOJI_METADATA_VERSION_PREFS, LATEST_EMOJI_METADATA_VERSION);
+            editor.apply();
         }
         catch (Exception e){
             // TODO
         }
-
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(IS_DB_FILLED_PREFS, true);
-        editor.commit();
 
         return false;
     }
@@ -297,6 +306,17 @@ public class EmojiDb {
 
         return r;
 
+    }
+
+    private void clearDatabase(){
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+
+        db.execSQL(this.context.getString(R.string.SQL_delete_category));
+        db.execSQL(this.context.getString(R.string.SQL_delete_emoji));
+        db.execSQL(this.context.getString(R.string.SQL_delete_keyword));
+        db.execSQL(this.context.getString(R.string.SQL_delete_emoji_keyword));
+
+        db.close();
     }
 
 }
