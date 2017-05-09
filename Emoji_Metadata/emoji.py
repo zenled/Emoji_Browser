@@ -9,3 +9,12 @@ class Emoji:
         self.emoji_order = None
         self.keywords = set()
         self.category = None
+        self.real_code = None
+
+    def all_keywords_to_lover(self):
+        new_keywords = set()
+        for keyword in self.keywords:
+            new_keywords.add(keyword)
+
+        self.keywords = new_keywords
+

@@ -1,4 +1,7 @@
 import json
+
+from builtins import id
+
 from emoji import Emoji
 
 # balacklist skip these emoji
@@ -13,36 +16,11 @@ json_file.close()
 emojis_json = json.loads(json_string)
 
 # for parsing
-all_category = {} #{"category_name":id}
-all_keywords = {} #{"keyword_name":id}
-all_emoji = {} #{"emojiOne_id": Emoji}
+all_category = {}  # {"category_name":id}
+all_keywords = {}  # {"keyword_name":id}
+all_emoji = set()  # set of Emoji
 
-# Make all_emoji
-for id, key in enumerate(emojis_json):
-    all_emoji[key] = Emoji()
-    all_emoji[key].id = id
-
-# Make all_category ---------------------------------------------------------
-'''
-    Goes through all emoji extracts categories, puts category to Emoji, puts them in a list
-    sorts the list and puts all into all_category
-'''
-category_extracted = []
-# extracts
-for key in emojis_json:
-    emoji = emojis_json[key]
-    category = emoji["category"]
-    if category not in category_extracted:
-        category_extracted.append(category)
-
-# sorts
-category_extracted.sort()
-
-# puts into all_category
-for i, s in enumerate(category_extracted):
-    all_category[s] = i
-
-# Make all_keywords and Emoji---------------------------------------------------------
+# Make all_emoji ---------------------------------------------------------
 '''
     Goes through all emoji extracts keywords, puts them in a list
     sorts the list and puts all into all_keywords;
@@ -57,95 +35,121 @@ for i, s in enumerate(category_extracted):
         * keywords
     
 '''
-keywords_extracted = []
-# extracts
-for key in emojis_json:
-    emoji = emojis_json[key]
-    extracted = set()
+for id, key in enumerate(emojis_json):
+    if key.lstrip("0") in blacklist:
+        continue
 
-    # extracts from name
-    field = emoji["name"]
-    all_emoji[key].name = field
-    for s in field.split(" "):
-        extracted.add(s.lower())
+    emoji_json = emojis_json[key]
 
-    # extracts from category
-    field = emoji["category"]
-    all_emoji[key].category = field
-    for s in field.split(" "):
-        extracted.add(s.lower())
+    emoji = Emoji()
 
-    # extracts from shortname
-    field = emoji["shortname"]
-    all_emoji[key].short_name = field
-    for s in field.split(" "):
-        extracted.add(s.lower())
+    # sets real_code (this is used when "removes some emoji")
+    emoji.real_code = key
 
-    # extracts from shortname_alternates
-    field = emoji["shortname_alternates"]
-    for s in field:
-        extracted.add(s.lower())
-
-    # extracts from ascii
-    field = emoji["ascii"]
-    for s in field:
-        extracted.add(s.lower())
-
-    # extracts from keywords
-    field = emoji["keywords"]
-    for s in field:
-        extracted.add(s.lower())
+    # sets id
+    emoji.id = id
 
     # sets code
-    field = key
-    field = field.lstrip("0")
-    all_emoji[key].code = field
+    field = key.lstrip("0")
+    emoji.code = field
+    emoji.keywords.add(field)
+
+    # sets name
+    field = emoji_json["name"]
+    emoji.name = field
+    for s in field.split(" "):
+        emoji.keywords.add(s)
+
+    # sets category
+    field = emoji_json["category"]
+    emoji.category = field
+    for s in field.split(" "):
+        emoji.keywords.add(s)
+
+    # sets shortname
+    field = emoji_json["shortname"]
+    emoji.short_name = field
+    for s in field.split(" "):
+        emoji.keywords.add(s)
+
+    # sets keywords from shortname_alternates
+    field = emoji_json["shortname_alternates"]
+    for s in field:
+        emoji.keywords.add(s)
+
+    # sets keywords from ascii
+    field = emoji_json["ascii"]
+    for s in field:
+        emoji.keywords.add(s)
+
+    # sets keywords from keywords
+    field = emoji_json["keywords"]
+    for s in field:
+        emoji.keywords.add(s)
 
     # sets has_tone
     '''
         If an emoji in emoji.json has something in diversities:[...]
         This means that the emoji has tone modifications but this emoji has tone 0
     '''
-    diversities = emoji["diversities"]
+    diversities = emoji_json["diversities"]
     vas_tone_from_diversities = False
 
     if len(diversities) != 0:
-        all_emoji[key].has_tone = True
+        emoji.has_tone = True
         vas_tone_from_diversities = True
 
-    if " tone" in emoji["name"]:
-        all_emoji[key].has_tone = True
+    if " tone" in emoji.name:
+        emoji.has_tone = True
 
     # sets tone
-    if all_emoji[key].has_tone and vas_tone_from_diversities is False:
-        shortname = emoji["shortname"]
-        tone_string = shortname[len(shortname) -2]
+    if emoji.has_tone and vas_tone_from_diversities is False:
+        tone_string = emoji.short_name[len(emoji.short_name) - 2]
         tone = int(tone_string)
-        all_emoji[key].tone = tone
+        emoji.tone = tone
 
     # sets emoji_order
-    all_emoji[key].emoji_order = int(emoji["order"])
+    emoji.emoji_order = int(emoji_json["order"])
 
-    # removes "" from extracted
-    if "" in extracted:
-        extracted.remove("")
+    emoji.all_keywords_to_lover()
 
-    # sets keywords
-    all_emoji[key].keywords = extracted
+    all_emoji.add(emoji)
+
+# removes some emoji
+to_remove_codes = set()
+for emoji in all_emoji:
+    emoji_json = emojis_json[emoji.real_code]
+    genders = emoji_json["genders"]
+    if len(genders) == 2:
+        to_remove_codes.add(emoji.code)
+        for s in emoji_json["diversities"]:
+            to_remove_codes.add(s)
+
+new_all_emoji = set()
+for emoji in all_emoji:
+    if emoji.code not in to_remove_codes:
+        new_all_emoji.add(emoji)
+
+all_emoji = new_all_emoji
 
 
+# Make all_keywords ---------------------------------------------------------
+keywords_extracted = set()
+for emoji in all_emoji:
+    for keyword in emoji.keywords:
+        keywords_extracted.add(keyword)
 
-    # puts into keywords_extracted
-    for s in extracted:
-        if s not in keywords_extracted:
-            keywords_extracted.append(s)
+for id, keyword in enumerate(keywords_extracted):
+    all_keywords[keyword] = id
 
-# sorts
-keywords_extracted.sort()
+# Make all_category --------------------------------------------------------
+category_extracted = set()
+for emoji in all_emoji:
+    category_extracted.add(emoji.category)
 
-# puts into all_keywords
-for i, s in enumerate(keywords_extracted):
-    all_keywords[s] = i
+for id, category in enumerate(category_extracted):
+    all_category[category] = id
+
 
 # Puts everithing into out_folder ----------------------------
 
@@ -175,10 +179,7 @@ out_keywords.close()
 out_emoji = open(out_folder + "emoji.txt", "w")
 out_emoji_keyword = open(out_folder + "emoji_keyword.txt", "w")
 
-for emoji in all_emoji.values():
-
-    if emoji.code in blacklist:
-        continue
+for emoji in all_emoji:
 
     l_emoji = {
         "id": emoji.id,
