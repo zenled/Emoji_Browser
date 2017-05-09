@@ -293,7 +293,7 @@ public class EmojiDb {
         tone = EmojiTone.getTone(c.getInt(4));
         emojiOrder = c.getInt(5);
         category = EmojiCategory.stringToCategory(c.getString(6));
-        keywords.add(c.getString(6));
+        keywords.add(c.getString(7));
 
         while (c.moveToNext()){
             keywords.add(c.getString(7));
