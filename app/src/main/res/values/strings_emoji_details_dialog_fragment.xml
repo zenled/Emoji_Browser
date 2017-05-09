@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="emoji_details_dialog_fragment_positive_button">OK</string>
+
     <string name="emoji_unicode_indicator_text">Unicode:</string>
     <string name="emoji_shortname_indicator_text">Short Name:</string>
     <string name="emoji_has_tone_indicator_text">Has Tone:</string>

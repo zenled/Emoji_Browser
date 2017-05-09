@@ -52,7 +52,7 @@ public class EmojiDetailsDialogFragment extends DialogFragment {
 
         fillDialog(mainView);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.emoji_details_dialog_fragment_positive_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

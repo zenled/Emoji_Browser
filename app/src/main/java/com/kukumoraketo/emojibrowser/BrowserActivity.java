@@ -45,6 +45,8 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
         pagerAdapter = new EmojiDisplayPagerAdapter(getSupportFragmentManager(), provider, getApplicationContext());
         viewPager.setAdapter(pagerAdapter);
 
+        viewPager.setCurrentItem(1);
+
 
         //region sets TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
