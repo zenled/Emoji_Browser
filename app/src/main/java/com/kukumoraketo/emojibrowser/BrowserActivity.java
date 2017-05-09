@@ -67,12 +67,12 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
                         return true;
                     }
                     case R.id.mi_about: {
-                        // TODO
-                        break;
+                        AboutDialogFragment aboutDialog = AboutDialogFragment.newInstance();
+                        aboutDialog.show(getSupportFragmentManager(), "about_dialog");
+                        return true;
                     }
                     default:
                         break;
-
                 }
 
                 return true;

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_title">About</string>
+
+    <string name="about_positiveButton">OK</string>
+
+    <string name="about_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet leo tellus, sed dictum massa eleifend ut. Duis at neque sollicitudin, pellentesque enim in, convallis sapien. Sed suscipit cursus leo, eu luctus tortor iaculis eu. Maecenas laoreet sem dapibus, euismod augue vitae, efficitur elit. Maecenas odio quam, posuere non mi ullamcorper, scelerisque feugiat arcu. Cras varius faucibus tincidunt. Pellentesque eget consequat sem. Curabitur pulvinar nisi vitae arcu vulputate, eget dignissim ligula sodales. Phasellus sit amet aliquet lectus. Nullam et est tellus. Nunc tellus dui, vulputate at urna in, tristique blandit nisl. Suspendisse ultrices, tellus at dapibus vehicula, justo turpis pellentesque ligula, ac hendrerit nisi lorem vitae enim. Phasellus non feugiat lectus. Vivamus sollicitudin dui libero, a volutpat ex sodales ac. Sed vel tincidunt leo.</string>
+</resources>
