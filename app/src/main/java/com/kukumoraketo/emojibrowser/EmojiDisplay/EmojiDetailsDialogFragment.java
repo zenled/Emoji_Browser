@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiFull;
 import com.kukumoraketo.emojibrowser.R;
 import com.kukumoraketo.emojibrowser.Utils.StringUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
@@ -71,7 +72,7 @@ public class EmojiDetailsDialogFragment extends DialogFragment {
 
         //region sets Texts and Image
         ImageView imageView = (ImageView) mainView.findViewById(R.id.emoji_imageView);
-        imageView.setImageResource(this.emoji.getDravableId(getContext()));
+        Picasso.with(getContext()).load(this.emoji.getDravableId(getContext())).into(imageView);
 
         TextView nameView = (TextView) mainView.findViewById(R.id.emoji_name_textView);
         nameView.setText(StringUtils.toCamelCase(this.emoji.getName()));
