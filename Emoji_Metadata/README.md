@@ -10,6 +10,9 @@ Just run the *generate_emoji_metadata.sh*
 bash generate_emoji_metadata.sh
 ```
 
+To use optimized sql in android you must escape ' with \'  
+In res-strings all ' must bes escaped
+
 ## Troubleshooting
 
 The database */database/filled.db* must be empty in order for *generate_emoji_metadata.sh* to work. SQL for deleting data is in */SQL/delete/*
