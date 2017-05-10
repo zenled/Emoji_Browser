@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.cert.TrustAnchor;
@@ -95,110 +96,32 @@ public class EmojiDb {
 
         try {
             String sql;
-            SQLiteStatement statement;
             InputStream resourceStream;
-            BufferedReader reader;
-
             String line;
 
-            // inserts EmojiCategory
-            sql = this.context.getString(R.string.SQL_insert_category);
-            statement = db.compileStatement(sql);
-
+            // inserts Category
             resourceStream = this.context.getResources().openRawResource(R.raw.category);
-            reader = new BufferedReader(new InputStreamReader(resourceStream));
+            sql = convertStreamToString(resourceStream);
 
-            db.beginTransaction();
-            while ((line = reader.readLine()) != null){
-                JSONObject jsonObject = new JSONObject(line);
-
-                statement.bindLong(1, jsonObject.getInt("id"));
-                statement.bindString(2, jsonObject.getString("category"));
-
-                statement.executeInsert();
-                statement.clearBindings();
-            }
-            resourceStream.close();
-            reader.close();
-
-            db.setTransactionSuccessful();
-            db.endTransaction();
+            db.execSQL(sql);
 
             // inserts Keyword
-            sql = this.context.getString(R.string.SQL_insert_keyword);
-            statement = db.compileStatement(sql);
-
             resourceStream = this.context.getResources().openRawResource(R.raw.keyword);
-            reader = new BufferedReader(new InputStreamReader(resourceStream));
+            sql = convertStreamToString(resourceStream);
 
-            db.beginTransaction();
-            while ((line = reader.readLine()) != null){
-                JSONObject jsonObject = new JSONObject(line);
-
-                statement.bindLong(1, jsonObject.getInt("id"));
-                statement.bindString(2, jsonObject.getString("keyword"));
-
-                statement.executeInsert();
-                statement.clearBindings();
-            }
-            resourceStream.close();
-            reader.close();
-
-            db.setTransactionSuccessful();
-            db.endTransaction();
+            db.execSQL(sql);
 
             // inserts Emoji_Keyword
-            sql = this.context.getString(R.string.SQL_insert_emoji_keyword);
-            statement = db.compileStatement(sql);
-
             resourceStream = this.context.getResources().openRawResource(R.raw.emoji_keyword);
-            reader = new BufferedReader(new InputStreamReader(resourceStream));
+            sql = convertStreamToString(resourceStream);
 
-            db.beginTransaction();
-            while ((line = reader.readLine()) != null){
-                JSONObject jsonObject = new JSONObject(line);
-
-                statement.bindLong(1, jsonObject.getInt("emoji_id"));
-                statement.bindString(2, jsonObject.getString("keyword_id"));
-
-                statement.executeInsert();
-                statement.clearBindings();
-            }
-            resourceStream.close();
-            reader.close();
-
-            db.setTransactionSuccessful();
-            db.endTransaction();
+            db.execSQL(sql);
 
             // inserts Emoji
-            sql = this.context.getString(R.string.SQL_insert_emoji);
-            statement = db.compileStatement(sql);
-
             resourceStream = this.context.getResources().openRawResource(R.raw.emoji);
-            reader = new BufferedReader(new InputStreamReader(resourceStream));
+            sql = convertStreamToString(resourceStream);
 
-            db.beginTransaction();
-            while ((line = reader.readLine()) != null){
-                JSONObject jsonObject = new JSONObject(line);
-
-                statement.bindLong(1, jsonObject.getInt("id"));
-                statement.bindString(2, jsonObject.getString("code"));
-                statement.bindString(3, jsonObject.getString("name"));
-                statement.bindString(4, jsonObject.getString("short_name"));
-                boolean hasTone = jsonObject.getBoolean("has_tone");
-                statement.bindLong(5, (hasTone? 1 : 0));
-                statement.bindLong(6, jsonObject.getInt("tone"));
-                statement.bindLong(7, jsonObject.getInt("emoji_order"));
-                statement.bindLong(8, jsonObject.getInt("category_id"));
-
-                statement.executeInsert();
-                statement.clearBindings();
-            }
-            resourceStream.close();
-            reader.close();
-
-            db.setTransactionSuccessful();
-            db.endTransaction();
+            db.execSQL(sql);
 
         }
         catch (Exception e){
@@ -317,6 +240,27 @@ public class EmojiDb {
         db.execSQL(this.context.getString(R.string.SQL_delete_emoji_keyword));
 
         db.close();
+    }
+
+    private String convertStreamToString(InputStream is) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
     }
 
 }

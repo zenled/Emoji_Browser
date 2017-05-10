@@ -1,10 +1,1 @@
-{"id": 9, "category": "travel"}
-{"id": 5, "category": "objects"}
-{"id": 4, "category": "nature"}
-{"id": 8, "category": "symbols"}
-{"id": 7, "category": "regional"}
-{"id": 1, "category": "flags"}
-{"id": 2, "category": "food"}
-{"id": 3, "category": "modifier"}
-{"id": 0, "category": "activity"}
-{"id": 6, "category": "people"}
+INSERT INTO Category (id, category) VALUES ( 6, "food"), ( 0, "activity"), ( 9, "modifier"), ( 1, "regional"), ( 2, "symbols"), ( 3, "flags"), ( 7, "people"), ( 8, "nature"), ( 4, "objects"), ( 5, "travel")
