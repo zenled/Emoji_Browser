@@ -51,7 +51,7 @@ public enum EmojiCategory {
     SYMBOLS {
         @Override
         public String toString(){
-            return "symbold";
+            return "symbols";
         }
     },
     NATURE {
