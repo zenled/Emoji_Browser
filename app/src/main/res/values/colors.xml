@@ -6,4 +6,6 @@
 
     <color name="color_emojiSelected_true">#cacaca</color>
     <color name="color_emojiSelected_false">#00cacaca</color>
+
+    <color name="color_material_gray_light">#FAFAFA</color>
 </resources>

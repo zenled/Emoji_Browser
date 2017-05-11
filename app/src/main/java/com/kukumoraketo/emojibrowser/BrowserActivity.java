@@ -113,6 +113,8 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
             }
         });
         //endregion
+
+        getWindow().setBackgroundDrawableResource(R.color.color_material_gray_light);
     }
 
     @Override
