@@ -27,7 +27,7 @@ public class EmojiDisplayPagerAdapter extends FragmentPagerAdapter {
     private EmojiProvider emojiProvider;
 
     private int[] tabLayoutIcons = {
-            R.drawable.ic_search,
+            R.mipmap.ic_search,
             R.drawable.ic_people,
             R.drawable.ic_nature,
             R.drawable.ic_food,
