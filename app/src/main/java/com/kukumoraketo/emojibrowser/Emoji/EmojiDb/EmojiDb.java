@@ -96,32 +96,111 @@ public class EmojiDb {
 
         try {
             String sql;
+            SQLiteStatement statement;
             InputStream resourceStream;
+            BufferedReader bufferedReader;
             String line;
 
             // inserts Category
-            resourceStream = this.context.getResources().openRawResource(R.raw.category);
-            sql = convertStreamToString(resourceStream);
+            sql = this.context.getString(R.string.SQL_insert_category);
+            statement = db.compileStatement(sql);
 
-            db.execSQL(sql);
+            resourceStream = this.context.getResources().openRawResource(R.raw.category);
+            bufferedReader = new BufferedReader(new InputStreamReader(resourceStream));
+
+            db.beginTransaction();
+            while ((line = bufferedReader.readLine()) != null){
+                statement.bindLong(1, Integer.parseInt(line)); // id
+                line = bufferedReader.readLine();
+                statement.bindString(2, line); // category
+
+                statement.executeInsert();
+                statement.clearBindings();
+            }
+            resourceStream.close();
+            bufferedReader.close();
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
 
             // inserts Keyword
-            resourceStream = this.context.getResources().openRawResource(R.raw.keyword);
-            sql = convertStreamToString(resourceStream);
+            sql = this.context.getString(R.string.SQL_insert_keyword);
+            statement = db.compileStatement(sql);
 
-            db.execSQL(sql);
+            resourceStream = this.context.getResources().openRawResource(R.raw.keyword);
+            bufferedReader = new BufferedReader(new InputStreamReader(resourceStream));
+
+            db.beginTransaction();
+            while ((line = bufferedReader.readLine()) != null){
+                statement.bindLong(1, Integer.parseInt(line)); // id
+                line = bufferedReader.readLine();
+                statement.bindString(2, line); // keyword
+
+                statement.executeInsert();
+                statement.clearBindings();
+            }
+            resourceStream.close();
+            bufferedReader.close();
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
 
             // inserts Emoji_Keyword
-            resourceStream = this.context.getResources().openRawResource(R.raw.emoji_keyword);
-            sql = convertStreamToString(resourceStream);
+            sql = this.context.getString(R.string.SQL_insert_emoji_keyword);
+            statement = db.compileStatement(sql);
 
-            db.execSQL(sql);
+            resourceStream = this.context.getResources().openRawResource(R.raw.emoji_keyword);
+            bufferedReader = new BufferedReader(new InputStreamReader(resourceStream));
+
+            db.beginTransaction();
+            while ((line = bufferedReader.readLine()) != null){
+                statement.bindLong(1, Integer.parseInt(line)); // emoji_id
+                line = bufferedReader.readLine();
+                statement.bindLong(2, Integer.parseInt(line)); // keyword_id
+
+                statement.executeInsert();
+                statement.clearBindings();
+            }
+            resourceStream.close();
+            bufferedReader.close();
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
 
             // inserts Emoji
-            resourceStream = this.context.getResources().openRawResource(R.raw.emoji);
-            sql = convertStreamToString(resourceStream);
+            sql = this.context.getString(R.string.SQL_insert_emoji);
+            statement = db.compileStatement(sql);
 
-            db.execSQL(sql);
+            resourceStream = this.context.getResources().openRawResource(R.raw.emoji);
+            bufferedReader = new BufferedReader(new InputStreamReader(resourceStream));
+
+            db.beginTransaction();
+            while ((line = bufferedReader.readLine()) != null){
+                statement.bindLong(1, Integer.parseInt(line)); // id
+                line = bufferedReader.readLine();
+                statement.bindString(2, line); // code
+                line = bufferedReader.readLine();
+                statement.bindString(3, line); // name
+                line = bufferedReader.readLine();
+                statement.bindString(4, line); // short_name
+                line = bufferedReader.readLine();
+                statement.bindLong(5, Integer.parseInt(line)); // has_tone
+                line = bufferedReader.readLine();
+                statement.bindLong(6, Integer.parseInt(line)); // tone
+                line = bufferedReader.readLine();
+                statement.bindLong(7, Integer.parseInt(line)); // emoji_order
+                line = bufferedReader.readLine();
+                statement.bindLong(8, Integer.parseInt(line)); // category_id
+
+
+                statement.executeInsert();
+                statement.clearBindings();
+            }
+            resourceStream.close();
+            bufferedReader.close();
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
 
         }
         catch (Exception e){
