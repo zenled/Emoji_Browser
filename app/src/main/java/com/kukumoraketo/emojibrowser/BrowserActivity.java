@@ -90,26 +90,21 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                View focus = getCurrentFocus();
-                if (focus != null){
-                    hideKeyboard(focus);
-                }
             }
 
             @Override
             public void onPageSelected(int position) {
-                View focus = getCurrentFocus();
-                if (focus != null){
-                    hideKeyboard(focus);
+                if (position == 0){
+                    // If position is 0 it is on the search fragments and so it shows keyboard
+                    showKeyboard(getCurrentFocus());
+                }
+                else {
+                    hideKeyboard(getCurrentFocus());
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                View focus = getCurrentFocus();
-                if (focus != null){
-                    hideKeyboard(focus);
-                }
             }
         });
         //endregion
@@ -150,5 +145,9 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
     @Override
     public void hideKeyboard(View v) {
         this.inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    public void showKeyboard(View v){
+        this.inputMethodManager.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
     }
 }
