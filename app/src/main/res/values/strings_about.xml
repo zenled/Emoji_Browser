@@ -6,8 +6,33 @@
 
     <string name="about_positiveButton">OK</string>
 
-    <string name="about_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet leo tellus, sed dictum massa eleifend ut. Duis at neque sollicitudin, pellentesque enim in, convallis sapien. Sed suscipit cursus leo, eu luctus tortor iaculis eu. Maecenas laoreet sem dapibus, euismod augue vitae, efficitur elit. Maecenas odio quam, posuere non mi ullamcorper, scelerisque feugiat arcu. Cras varius faucibus tincidunt. Pellentesque eget consequat sem. Curabitur pulvinar nisi vitae arcu vulputate, eget dignissim ligula sodales. Phasellus sit amet aliquet lectus. Nullam et est tellus. Nunc tellus dui, vulputate at urna in, tristique blandit nisl. Suspendisse ultrices, tellus at dapibus vehicula, justo turpis pellentesque ligula, ac hendrerit nisi lorem vitae enim. Phasellus non feugiat lectus. Vivamus sollicitudin dui libero, a volutpat ex sodales ac. Sed vel tincidunt leo.</string>
+    <string name="tagline">Explore emoji with Emoji Browser</string>
+
+    <string name="about_content">
+                <![CDATA[
+            <p>
+                Emoji graphics provided by <a href="https://github.com/twitter/twemoji">Twemoji</a><br>
+                Tab layout icons (except search icon) provided free by <a href="https://github.com/Ranks/emojione">EmojiOne</a><br>
+                Emoji metadata (emoji names, keywords, …) provided free by <a href="https://github.com/Ranks/emojione">EmojiOne</a>
+            </p>
+            <p>
+                App uses <a href="http://square.github.io/picasso/">Picasso</a> android library
+            </p>
+            <p>
+                <a href="https://romannurik.github.io/AndroidAssetStudio/">Android Asset Studio</a> was used to enhance app icon
+            </p>
+        ]]>
+    </string>
     
-    <string name="about_license_content">Lorem ipsum License</string>
+    <string name="about_license_content">
+        <![CDATA[
+            <p>
+                Code licensed under the MIT License: <a href="http://opensource.org/licenses/MIT">http://opensource.org/licenses/MIT</a>
+            </p>
+            <p>
+                Emoji graphics licensed under CC-BY 4.0: <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>
+            </p>
+        ]]>
+    </string>
     
 </resources>
