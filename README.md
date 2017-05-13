@@ -15,7 +15,7 @@ Emoji metadata (emoji names, keywords, ...) provided free by [EmojiOne](https://
 
 App uses [Picasso](http://square.github.io/picasso/) android library
 
-[Android Asset Studio](Graphics licensed under CC-BY 4.0: https://creativecommons.org/licenses/by/4.0/) was used to enhance app icon
+[Android Asset Studio](https://romannurik.github.io/AndroidAssetStudio/) was used to enhance app icon
 
 ## License
 
