@@ -4,78 +4,93 @@ resources_dir = "./parsed/"
 out_dir = "./optimized/"
 
 # optimization of category ---------------------------------------------------------------------------------------------
-sql = "INSERT INTO Category (id, category) VALUES "
-
 resource = open(resources_dir + "category.txt")
 
+outStr = ""
+
 for line in resource:
     line_json = json.loads(line)
-    s = "( " + str(line_json["id"]) + ", \"" + line_json["category"] + "\"), "
-    sql += s
+    outStr += str(line_json["id"])
+    outStr += "\n"
+    outStr += line_json["category"]
+    outStr += "\n"
 resource.close()
-# removes the last ", " from sql
-sql = sql[:-2]
 
-out = open(out_dir + "SQL_insert_category.sql", "w")
-out.write(sql)
-out.close()
+# so that there isn't blank like at end of file
+outStr = outStr[:-1]
+
+out_file = open(out_dir + "category.txt", "w")
+out_file.write(outStr)
+out_file.close()
 
 # optimization of emoji ------------------------------------------------------------------------------------------------
-sql = "INSERT INTO Emoji (id, code, name, short_name, has_tone, tone, emoji_order, category_id) VALUES "
-
 resource = open(resources_dir + "emoji.txt")
+
+outStr = ""
 
 for line in resource:
     line_json = json.loads(line)
-    s = "( " + str(line_json["id"]) + \
-        ", \"" + line_json["code"] + "\"" + \
-        ", \"" + line_json["name"] + "\"" + \
-        ", \"" + line_json["short_name"] + "\"" + \
-        ", " + str(int(line_json["has_tone"])) + \
-        ", " + str(line_json["tone"]) + \
-        ", " + str(line_json["emoji_order"]) + \
-        ", " + str(line_json["category_id"]) + \
-        "), "
-
-    sql += s
+    outStr += str(line_json["id"])
+    outStr += "\n"
+    outStr += line_json["code"]
+    outStr += "\n"
+    outStr += line_json["name"]
+    outStr += "\n"
+    outStr += line_json["short_name"]
+    outStr += "\n"
+    outStr += str(int(line_json["has_tone"]))
+    outStr += "\n"
+    outStr += str(line_json["tone"])
+    outStr += "\n"
+    outStr += str(line_json["emoji_order"])
+    outStr += "\n"
+    outStr += str(line_json["category_id"])
+    outStr += "\n"
 resource.close()
-# removes the last ", " from sql
-sql = sql[:-2]
 
-out = open(out_dir + "SQL_insert_emoji.sql", "w")
-out.write(sql)
+# so that there isn't blank like at end of file
+outStr = outStr[:-1]
+
+out = open(out_dir + "emoji.txt", "w")
+out.write(outStr)
 out.close()
 
 # optimization of emoji_keyword ----------------------------------------------------------------------------------------
-sql = "INSERT INTO Emoji_Keyword (emoji_id, keyword_id) VALUES "
-
 resource = open(resources_dir + "emoji_keyword.txt")
+
+outStr = ""
 
 for line in resource:
     line_json = json.loads(line)
-    s = "( " + str(line_json["emoji_id"]) + ", " + str(line_json["keyword_id"]) + "), "
-    sql += s
+    outStr += str(line_json["emoji_id"])
+    outStr += "\n"
+    outStr += str(line_json["keyword_id"])
+    outStr += "\n"
 resource.close()
-# removes the last ", " from sql
-sql = sql[:-2]
 
-out = open(out_dir + "SQL_insert_emoji_keyword.sql", "w")
-out.write(sql)
+# so that there isn't blank like at end of file
+outStr = outStr[:-1]
+
+out = open(out_dir + "emoji_keyword.txt", "w")
+out.write(outStr)
 out.close()
 
 # optimization of keyword ----------------------------------------------------------------------------------------------
-sql = "INSERT INTO Keyword (id, keyword) VALUES "
-
 resource = open(resources_dir + "keyword.txt")
+
+outStr = ""
 
 for line in resource:
     line_json = json.loads(line)
-    s = "( " + str(line_json["id"]) + ", \"" + line_json["keyword"] + "\"), "
-    sql += s
+    outStr += str(line_json["id"])
+    outStr += "\n"
+    outStr += line_json["keyword"]
+    outStr += "\n"
 resource.close()
-# removes the last ", " from sql
-sql = sql[:-2]
 
-out = open(out_dir + "SQL_insert_keyword.sql", "w")
-out.write(sql)
+# so that there isn't blank like at end of file
+outStr = outStr[:-1]
+
+out = open(out_dir + "keyword.txt", "w")
+out.write(outStr)
 out.close()
