@@ -17,27 +17,27 @@ public class EmojiLite extends EmojiMinimal implements Comparable<EmojiLite> {
 
     /**
      * Create new EmojiLite
-     * @param unicode
+     * @param code
      * @param hasTone
      * @param tone
      * @param emojiOrder
      * @param category
      */
-    public EmojiLite(String unicode, boolean hasTone, EmojiTone tone, int emojiOrder, EmojiCategory category)
+    public EmojiLite(String code, boolean hasTone, EmojiTone tone, int emojiOrder, EmojiCategory category)
     {
-        super(unicode);
+        super(code);
         this.hasTone = hasTone;
         this.tone = tone;
         this.emojiOrder = emojiOrder;
         this.category = category;
     }
 
-    public EmojiLite(String unicode, boolean hasTone, int tone, int emojiOrder, EmojiCategory category){
-        this(unicode, hasTone, EmojiTone.getTone(tone), emojiOrder, category);
+    public EmojiLite(String code, boolean hasTone, int tone, int emojiOrder, EmojiCategory category){
+        this(code, hasTone, EmojiTone.getTone(tone), emojiOrder, category);
     }
 
     public EmojiLite(EmojiLite emojiLite){
-        super(emojiLite.unicode);
+        super(emojiLite.code);
         this.hasTone = emojiLite.hasTone();
         this.tone = emojiLite.getTone();
         this.emojiOrder = emojiLite.getEmojiOrder();
@@ -52,7 +52,7 @@ public class EmojiLite extends EmojiMinimal implements Comparable<EmojiLite> {
     }
 
     private String getImageName(){
-        return "em_" + this.unicode.replace("-", "_");
+        return "em_" + this.code.replace("-", "_");
     }
 
     public boolean hasTone(){

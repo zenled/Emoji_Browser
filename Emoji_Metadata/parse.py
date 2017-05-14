@@ -27,6 +27,8 @@ all_emoji = set()  # set of Emoji
     Sets atributes to all_emoji
     
     Fields that counts as keywords (multi word keywords are splited):
+        * code (key in emoji.json)
+        * code_point ("code_points":{"output": ".."} in emoji.json)
         * name
         * category
         * shortname
@@ -52,6 +54,11 @@ for id, key in enumerate(emojis_json):
     # sets code
     field = key.lstrip("0")
     emoji.code = field
+    emoji.keywords.add(field)
+
+    # sets code_point
+    field = emoji_json["code_points"]["output"]
+    emoji.code_point = field
     emoji.keywords.add(field)
 
     # sets name
@@ -111,7 +118,9 @@ for id, key in enumerate(emojis_json):
     # sets emoji_order
     emoji.emoji_order = int(emoji_json["order"])
 
+    # optimization
     emoji.all_keywords_to_lover()
+    emoji.remove_blank_keywords()
 
     all_emoji.add(emoji)
 
@@ -151,7 +160,7 @@ for id, category in enumerate(category_extracted):
     all_category[category] = id
 
 
-# Puts everithing into out_folder ----------------------------
+# Puts everithing into out_folder -----------------------------------------
 
 # categories
 out_categories = open(out_folder + "category.txt", "w")
@@ -184,6 +193,7 @@ for emoji in all_emoji:
     l_emoji = {
         "id": emoji.id,
         "code": emoji.code,
+        "code_point": emoji.code_point,
         "name": emoji.name,
         "short_name": emoji.short_name,
         "has_tone": emoji.has_tone,

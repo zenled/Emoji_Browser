@@ -26,9 +26,9 @@ public class All_EmojiLite_Provider implements EmojiProvider{
     private EmojiTone tone; // selected EmojiTone
 
 
-    public All_EmojiLite_Provider(Context context, EmojiTone emojiTone){
+    public All_EmojiLite_Provider(Context context, EmojiTone emojiTone) throws Exception{
         this.context = context;
-
+        
         this.emojiDb = new EmojiDb(context);
 
         this.allEmoji = this.emojiDb.getAllEmojiLite();
@@ -57,7 +57,7 @@ public class All_EmojiLite_Provider implements EmojiProvider{
         List<String> codes = SearcherByKeyword.getUnicodeByKeywords(this.emojiDb, searchString);
 
         for (EmojiLite emoji : this.allEmoji){
-            if (codes.contains(emoji.getUnicode()) && (!emoji.hasTone() || emoji.getTone() == this.tone))
+            if (codes.contains(emoji.getCode()) && (!emoji.hasTone() || emoji.getTone() == this.tone))
                 r.add(emoji);
         }
 
@@ -78,6 +78,6 @@ public class All_EmojiLite_Provider implements EmojiProvider{
 
     @Override
     public EmojiFull getEmojiFull(EmojiLite emoji) {
-        return this.emojiDb.getEmojiFull(emoji.getUnicode());
+        return this.emojiDb.getEmojiFull(emoji.getCode());
     }
 }

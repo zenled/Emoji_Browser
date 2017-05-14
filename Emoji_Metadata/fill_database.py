@@ -64,6 +64,7 @@ for line in emoji_resource:
     purchases.append(tuple([
         line_json["id"],
         line_json["code"],
+        line_json["code_point"],
         line_json["name"],
         line_json["short_name"],
         line_json["has_tone"],

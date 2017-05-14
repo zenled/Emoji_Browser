@@ -34,6 +34,8 @@ for line in resource:
     outStr += "\n"
     outStr += line_json["code"]
     outStr += "\n"
+    outStr += line_json["code_point"]
+    outStr += "\n"
     outStr += line_json["name"]
     outStr += "\n"
     outStr += line_json["short_name"]

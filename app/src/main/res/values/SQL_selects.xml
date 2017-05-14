@@ -7,6 +7,6 @@
     <string name="SQL_select_code_by_keyword_pt_2">" INTERSECT SELECT Emoji.id FROM Emoji JOIN Emoji_Keyword ON (Emoji.id = Emoji_Keyword.emoji_id) JOIN Keyword ON (Emoji_Keyword.keyword_id = Keyword.id) WHERE Keyword.keyword LIKE "</string>
     <string name="SQL_select_code_by_keyword_pt_last">")</string>
 
-    <string name="SQL_select_emojifull_by_code">SELECT Emoji.code, Emoji.name, Emoji.short_name, Emoji.has_tone, Emoji.tone, Emoji.emoji_order, Category.category, Keyword.keyword FROM Category JOIN Emoji ON (Category.id = Emoji.category_id) JOIN Emoji_Keyword ON (Emoji.id = Emoji_Keyword.emoji_id) JOIN Keyword ON (Emoji_Keyword.keyword_id = Keyword.id) WHERE Emoji.code = "?"</string>
+    <string name="SQL_select_emojifull_by_code">SELECT Emoji.code, Emoji.code_point, Emoji.name, Emoji.short_name, Emoji.has_tone, Emoji.tone, Emoji.emoji_order, Category.category, Keyword.keyword FROM Category JOIN Emoji ON (Category.id = Emoji.category_id) JOIN Emoji_Keyword ON (Emoji.id = Emoji_Keyword.emoji_id) JOIN Keyword ON (Emoji_Keyword.keyword_id = Keyword.id) WHERE Emoji.code = "?"</string>
     
 </resources>

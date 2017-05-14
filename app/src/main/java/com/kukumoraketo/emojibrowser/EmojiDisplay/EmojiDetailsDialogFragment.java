@@ -78,7 +78,7 @@ public class EmojiDetailsDialogFragment extends DialogFragment {
         nameView.setText(StringUtils.toCamelCase(this.emoji.getName()));
 
         TextView unicodeView = (TextView) mainView.findViewById(R.id.emoji_unicode_textView);
-        unicodeView.setText(this.emoji.getUnicode());
+        unicodeView.setText(this.emoji.getCode());
 
         TextView shortNameView = (TextView) mainView.findViewById(R.id.emoji_shortName_textView);
         shortNameView.setText(this.emoji.getShortName());

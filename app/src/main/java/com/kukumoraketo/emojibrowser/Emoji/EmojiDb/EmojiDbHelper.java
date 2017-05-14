@@ -22,9 +22,14 @@ public class EmojiDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Creates Database
         db.execSQL("CREATE TABLE `Category` ( `id` INTEGER NOT NULL UNIQUE, `category` TEXT NOT NULL, PRIMARY KEY(`id`) )");
-        db.execSQL("CREATE TABLE \"Emoji\" ( `id` INTEGER NOT NULL UNIQUE, `code` TEXT NOT NULL UNIQUE, `name` TEXT NOT NULL, `short_name` TEXT, `has_tone` INTEGER NOT NULL, `tone` INTEGER, `emoji_order` INTEGER NOT NULL UNIQUE, `category_id` INTEGER NOT NULL, PRIMARY KEY(`id`) )");
+        db.execSQL("CREATE TABLE \"Emoji\" ( `id` INTEGER NOT NULL UNIQUE, `code` TEXT NOT NULL UNIQUE, `code_point` TEXT NOT NULL UNIQUE, `name` TEXT NOT NULL, `short_name` TEXT, `has_tone` INTEGER NOT NULL, `tone` INTEGER, `emoji_order` INTEGER NOT NULL UNIQUE, `category_id` INTEGER NOT NULL, PRIMARY KEY(id) )");
         db.execSQL("CREATE TABLE `Keyword` ( `id` INTEGER NOT NULL UNIQUE, `keyword` TEXT NOT NULL, PRIMARY KEY(`id`) )");
         db.execSQL("CREATE TABLE `Emoji_Keyword` ( `emoji_id` INTEGER NOT NULL, `keyword_id` INTEGER NOT NULL, PRIMARY KEY(`emoji_id`,`keyword_id`) )");
+
+        // Creates indexes
+        db.execSQL("CREATE INDEX `index_Emoji_code` ON `Emoji` (`code` )");
+        db.execSQL("CREATE INDEX `index_Emoji_id` ON `Emoji` (`id` )");
+        db.execSQL("CREATE INDEX `index_Keyword_keyword` ON `Keyword` (`keyword` )");
     }
 
     @Override

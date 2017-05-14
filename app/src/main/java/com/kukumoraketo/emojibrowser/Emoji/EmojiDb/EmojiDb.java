@@ -44,7 +44,7 @@ public class EmojiDb {
     private EmojiDbHelper dbHelper;
 
 
-    public EmojiDb(Context context){
+    public EmojiDb(Context context) throws Exception{
         this.context = context;
 
         this.dbHelper = new EmojiDbHelper(this.context);
@@ -56,7 +56,7 @@ public class EmojiDb {
      * If the database is empty it fills it
      * @return true if database had to be filled
      */
-    private boolean checkDb(){
+    private boolean checkDb() throws Exception{
 
         // Checks if database is already filled (from preferences)
         SharedPreferences preferences = this.context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -81,7 +81,7 @@ public class EmojiDb {
             editor.apply();
         }
         catch (Exception e){
-            // TODO
+            throw e;
         }
 
         return false;
@@ -180,17 +180,19 @@ public class EmojiDb {
                 line = bufferedReader.readLine();
                 statement.bindString(2, line); // code
                 line = bufferedReader.readLine();
-                statement.bindString(3, line); // name
+                statement.bindString(3, line); // code_point
                 line = bufferedReader.readLine();
-                statement.bindString(4, line); // short_name
+                statement.bindString(4, line); // name
                 line = bufferedReader.readLine();
-                statement.bindLong(5, Integer.parseInt(line)); // has_tone
+                statement.bindString(5, line); // short_name
                 line = bufferedReader.readLine();
-                statement.bindLong(6, Integer.parseInt(line)); // tone
+                statement.bindLong(6, Integer.parseInt(line)); // has_tone
                 line = bufferedReader.readLine();
-                statement.bindLong(7, Integer.parseInt(line)); // emoji_order
+                statement.bindLong(7, Integer.parseInt(line)); // tone
                 line = bufferedReader.readLine();
-                statement.bindLong(8, Integer.parseInt(line)); // category_id
+                statement.bindLong(8, Integer.parseInt(line)); // emoji_order
+                line = bufferedReader.readLine();
+                statement.bindLong(9, Integer.parseInt(line)); // category_id
 
 
                 statement.executeInsert();
@@ -205,7 +207,7 @@ public class EmojiDb {
         }
         catch (Exception e){
             Log.v(TAG, "Error filling Database");
-            throw new Exception("Error filling database",e.getCause());
+            throw new Exception("Error filling database", e.getCause());
         }
         finally {
             db.close();
@@ -267,8 +269,9 @@ public class EmojiDb {
         return r;
     }
 
-    public EmojiFull getEmojiFull(String unicode){
-        String emojiUnicode;
+    public EmojiFull getEmojiFull(String emojiCode){
+        String code;
+        String codePoint;
         boolean hasTone;
         EmojiTone tone;
         int emojiOrder;
@@ -282,26 +285,27 @@ public class EmojiDb {
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
 
         String sql = this.context.getString(R.string.SQL_select_emojifull_by_code);
-        String[] args =  {unicode};
+        String[] args =  {emojiCode};
 
         Cursor c = db.rawQuery(sql, args);
 
         c.moveToNext();
 
-        emojiUnicode = c.getString(0);
-        name = c.getString(1);
-        shortName = c.getString(2);
-        hasTone = (c.getInt(3) == 1) ? true : false;
-        tone = EmojiTone.getTone(c.getInt(4));
-        emojiOrder = c.getInt(5);
-        category = EmojiCategory.stringToCategory(c.getString(6));
-        keywords.add(c.getString(7));
+        code = c.getString(0);
+        codePoint = c.getString(1);
+        name = c.getString(2);
+        shortName = c.getString(3);
+        hasTone = (c.getInt(4) == 1);
+        tone = EmojiTone.getTone(c.getInt(5));
+        emojiOrder = c.getInt(6);
+        category = EmojiCategory.stringToCategory(c.getString(7));
+        keywords.add(c.getString(8));
 
         while (c.moveToNext()){
-            keywords.add(c.getString(7));
+            keywords.add(c.getString(8));
         }
 
-        EmojiFull r = new EmojiFull(emojiUnicode, hasTone, tone, emojiOrder, category, name, shortName, keywords);
+        EmojiFull r = new EmojiFull(code, codePoint, hasTone, tone, emojiOrder, category, name, shortName, keywords);
 
         db.close();
         c.close();
