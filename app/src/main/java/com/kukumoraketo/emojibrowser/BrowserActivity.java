@@ -39,7 +39,13 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
 
-        this.provider = new All_EmojiLite_Provider(getApplicationContext(), EmojiTone.TONE_00);
+        try {
+
+            this.provider = new All_EmojiLite_Provider(getApplicationContext(), EmojiTone.TONE_00);
+        }
+        catch (Exception e){
+
+        }
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         pagerAdapter = new EmojiDisplayPagerAdapter(getSupportFragmentManager(), provider, getApplicationContext());

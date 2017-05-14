@@ -11,32 +11,16 @@ import java.util.List;
 
 abstract class EmojiMinimal {
 
-    protected String unicode;
+    protected String code;
 
-    public EmojiMinimal(String unicode){
-        this.unicode = unicode;
+    public EmojiMinimal(String code){
+        this.code = code;
     }
 
-    public String getUnicode(){
-        return this.unicode;
+    public String getCode(){
+        return this.code;
     }
 
     public abstract int getDravableId(Context context);
-
-    public String getUnicodeProper() {
-
-        List<Integer> parts = new ArrayList<>();
-
-        for (String s : this.unicode.split("-")){
-            parts.add(Integer.parseInt(s, 16));
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for(int i : parts){
-            sb.append(Character.toChars(i));
-        }
-
-        return sb.toString();
-    }
 
 }

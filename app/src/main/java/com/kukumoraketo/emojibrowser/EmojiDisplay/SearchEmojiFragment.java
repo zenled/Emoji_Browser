@@ -16,6 +16,7 @@ import com.kukumoraketo.emojibrowser.IActivitiContainingSearchEmojiFragment;
 import com.kukumoraketo.emojibrowser.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zed on 3.5.2017.
