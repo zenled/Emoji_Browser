@@ -10,6 +10,7 @@
     <string name="emoji_keywords_indicator_text">Keywords:</string>
 
     <string name="copy_to_clipboard_button_text">Copy</string>
+    <string name="share_button_text">Share</string>
 
     <string name="emoji_has_tone_true">Yes</string>
     <string name="emoji_has_tone_false">No</string>
