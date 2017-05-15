@@ -37,6 +37,7 @@ public class EmojiDb {
     private static final String PREFS_NAME = "EmojiDbPreferences";
     private static final String IS_DB_FILLED_PREFS = "is_db_filled";
     private static final String EMOJI_METADATA_VERSION_PREFS = "emoji_metadata_version";
+    private static final String FORCE_CLEAR_DATABASE_PREFS = "force_clear";
 
     private static int LATEST_EMOJI_METADATA_VERSION = 1;
 
@@ -62,14 +63,17 @@ public class EmojiDb {
         SharedPreferences preferences = this.context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         boolean isDbFilled = preferences.getBoolean(IS_DB_FILLED_PREFS, false);
+        boolean clearDatabase = preferences.getBoolean(FORCE_CLEAR_DATABASE_PREFS, false);
 
-        if (isDbFilled) {
+        if (isDbFilled && !clearDatabase) {
             int metadataVersion = preferences.getInt(EMOJI_METADATA_VERSION_PREFS, 0);
             if (metadataVersion == LATEST_EMOJI_METADATA_VERSION)
                 return true;
             else
                 clearDatabase();
         }
+        if (clearDatabase)
+            clearDatabase();
 
         // if not filled it fills it
         try {
@@ -78,6 +82,7 @@ public class EmojiDb {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean(IS_DB_FILLED_PREFS, true);
             editor.putInt(EMOJI_METADATA_VERSION_PREFS, LATEST_EMOJI_METADATA_VERSION);
+            editor.putBoolean(FORCE_CLEAR_DATABASE_PREFS, false);
             editor.apply();
         }
         catch (Exception e){
@@ -325,25 +330,12 @@ public class EmojiDb {
         db.close();
     }
 
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
+    public static void setForceClearOnNextInstance(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(FORCE_CLEAR_DATABASE_PREFS, true);
+        editor.apply();
     }
 
 }
