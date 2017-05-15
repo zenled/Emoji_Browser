@@ -121,12 +121,25 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/emoji_copy_button"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="@string/copy_to_clipboard_button_text" />
+                    android:gravity="left">
+
+                    <Button
+                        android:id="@+id/emoji_copy_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="@string/copy_to_clipboard_button_text" />
+
+                    <Button
+                        android:id="@+id/emoji_share_buton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/share_button_text"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
