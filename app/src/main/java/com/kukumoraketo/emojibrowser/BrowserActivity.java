@@ -1,6 +1,7 @@
 package com.kukumoraketo.emojibrowser;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.widget.Button;
 
 import com.kukumoraketo.emojibrowser.Emoji.Emoji.EmojiTone;
 import com.kukumoraketo.emojibrowser.Emoji.EmojiDb.EmojiDb;
+import com.kukumoraketo.emojibrowser.Emoji.EmojiDb.EmojiDbHelper;
 import com.kukumoraketo.emojibrowser.Emoji.Providers.All_EmojiLite_Provider;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.BasicEmojiDisplayFragment;
 import com.kukumoraketo.emojibrowser.EmojiDisplay.ChangeToneDialogFragment;
@@ -44,7 +46,9 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
             this.provider = new All_EmojiLite_Provider(getApplicationContext(), EmojiTone.TONE_00);
         }
         catch (Exception e){
-
+            // if some exception happened while setting provider clear the database when starting the app next time
+            EmojiDb.setForceClearOnNextInstance(getApplicationContext());
+            throw new RuntimeException();
         }
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -111,6 +115,18 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
 
             @Override
             public void onPageScrollStateChanged(int state) {
+            }
+        });
+        //endregion
+
+        //region Exceptions
+        // code to handle uncaught exceptions
+        // if uncaught exception happens clear the EmojiDb
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                EmojiDb.setForceClearOnNextInstance(getApplicationContext());
             }
         });
         //endregion
