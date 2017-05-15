@@ -1,5 +1,7 @@
 # Emoji Browser
 
+[Play Store](https://play.google.com/store/apps/details?id=com.kukumoraketo.emojibrowser)
+
 **Explore emoji with Emoji Browser**
 
 <img src="https://raw.githubusercontent.com/ZedTheLed/Emoji_Browser/master/Art/logo.png" width="256px"/>
