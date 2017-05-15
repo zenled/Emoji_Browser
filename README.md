@@ -4,8 +4,15 @@
 
 <img src="https://raw.githubusercontent.com/ZedTheLed/Emoji_Browser/master/Art/logo.png" width="256px"/>
 
-Use search or scroll through categories to find new emoji.  
-App contains thousands of emoji and is a sure way to find just the right one.
+Do you ever struggle to find just the right emoji  
+With **Emoji Browser** all emoji are right at your fingertips  
+
+Use the convenient search function or browse through neatly organized categories.
+Don't forget to select the desired tone modifier and remember to be creative.
+
+Exploring emoji has never been so fun  
+
+<img src="https://raw.githubusercontent.com/ZedTheLed/Emoji_Browser/master/Art/screenshot/screenshot_1.png" height="350px"/>
 
 ## Sources
 
