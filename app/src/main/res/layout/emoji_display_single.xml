@@ -8,7 +8,6 @@
 
     <ImageView
         android:id="@+id/emojiDisplaySingle_ImageView"
-        android:src="@drawable/em_2a_20e3"
         android:layout_width="@dimen/emoji_display_single_image_size"
         android:layout_height="@dimen/emoji_display_single_image_size"
         />
