@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".BrowserActivity"
             android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="mcc|mnc|locale|keyboard|keyboardHidden|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize|layoutDirection">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
