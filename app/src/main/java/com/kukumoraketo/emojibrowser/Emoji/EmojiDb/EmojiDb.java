@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -77,19 +79,33 @@ public class EmojiDb {
 
         // if not filled it fills it
         try {
+
             fillDb();
 
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(IS_DB_FILLED_PREFS, true);
-            editor.putInt(EMOJI_METADATA_VERSION_PREFS, LATEST_EMOJI_METADATA_VERSION);
-            editor.putBoolean(FORCE_CLEAR_DATABASE_PREFS, false);
-            editor.apply();
+            setPrefrences(preferences, true, LATEST_EMOJI_METADATA_VERSION, false);
+        }
+        catch (SQLiteException e){
+            // if SQLiteException the app clears database and tries to fill it again
+            this.dbHelper.close();
+            this.dbHelper = new EmojiDbHelper(this.context);
+
+            emptyAndRefillDb();
+
+            setPrefrences(preferences, true, LATEST_EMOJI_METADATA_VERSION, false);
         }
         catch (Exception e){
             throw e;
         }
 
         return false;
+    }
+
+    private void setPrefrences(SharedPreferences preferences, boolean isDbFilled, int emojiMetadataVersion, boolean forceClear){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(IS_DB_FILLED_PREFS, isDbFilled);
+        editor.putInt(EMOJI_METADATA_VERSION_PREFS, emojiMetadataVersion);
+        editor.putBoolean(FORCE_CLEAR_DATABASE_PREFS, forceClear);
+        editor.apply();
     }
 
     /**
@@ -210,13 +226,18 @@ public class EmojiDb {
             db.endTransaction();
 
         }
-        catch (Exception e){
-            Log.v(TAG, "Error filling Database");
-            throw new Exception("Error filling database", e.getCause());
-        }
         finally {
+            if (db.inTransaction())
+                db.endTransaction();
             db.close();
         }
+
+    }
+
+    private void emptyAndRefillDb() throws Exception{
+        clearDatabase();
+
+        fillDb();
 
     }
 
