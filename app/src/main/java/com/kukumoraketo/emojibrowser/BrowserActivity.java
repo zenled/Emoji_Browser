@@ -2,6 +2,7 @@ package com.kukumoraketo.emojibrowser;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -35,6 +36,8 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
 
     private InputMethodManager inputMethodManager;
 
+    private boolean isLargeScreen; //  true if app is running on a tablet (large screen); false if application is running on a phone
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,11 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
 
         viewPager.setCurrentItem(1);
 
+        //region sets if app is running on a large screen
+        isLargeScreen =  (getApplicationContext().getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+        //endregion
 
         //region sets TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -106,6 +114,15 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
             public void onPageSelected(int position) {
                 if (position == 0){
                     // If position is 0 it is on the search fragments and so it shows keyboard
+
+                    // if app is running on a phone (small screen) and is in landscape, the keyboard won't open when going to search tab
+                    if (! isLargeScreen){
+                        boolean isInLandscape = getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+                        if (isInLandscape)
+                            return;
+                    }
+
                     showKeyboard(getCurrentFocus());
                 }
                 else {
@@ -166,6 +183,9 @@ public class BrowserActivity extends AppCompatActivity implements ChangeToneDial
 
     @Override
     public void hideKeyboard(View v) {
+        if (v == null)
+            return;
+
         this.inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
